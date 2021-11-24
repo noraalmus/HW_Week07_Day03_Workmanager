@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "749880490982",
+    "project_id": "workmangerhw",
+    "storage_bucket": "workmangerhw.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:749880490982:android:6267c5e123ee614718b427",
+        "android_client_info": {
+          "package_name": "com.example.hw_workmanger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "749880490982-4sm4hoa068v8fh37phpv4uhphvvera04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2Oo0Ev9AbTCFUZNi6mqo8yp1Zm-WLPcs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "749880490982-4sm4hoa068v8fh37phpv4uhphvvera04.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
