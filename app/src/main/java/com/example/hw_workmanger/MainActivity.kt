@@ -23,28 +23,81 @@ import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var textView:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-   textView=findViewById<TextView>(R.id.text)
+        var worker= PeriodicWorkRequestBuilder<LocationWorker>(5,
+           java.util.concurrent.TimeUnit.MINUTES, 15, java.util.concurrent.TimeUnit.MINUTES).build()
 
-        var worker= PeriodicWorkRequestBuilder<LocationWorker>(8,
-            java.util.concurrent.TimeUnit.HOURS, 15, java.util.concurrent.TimeUnit.MINUTES
-        )
+        WorkManager.getInstance(this).enqueue(worker)
 
 
-        //create data for worker for holding vaibales
-        var data= Data.Builder()
-            .putInt("Loop",25)
-        worker.setInputData(data.build())
 
-        //  .build()
 
-        WorkManager.getInstance(this)
-            .enqueue(worker.build())
+        checkPermissionForLocation()
+
+
+
+
     }
 
 
+    fun checkPermissionForLocation() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            // show request permission dialog
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION),1)
+
+        }else{
+
+            //showLocation()
+        }
+
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+
+           // showLocation()
+        }else{
+
+            AlertDialog.Builder(this).apply {
+                title= "warning"
+                setMessage("To access location go to Setting-> allow location service")
+                setPositiveButton("Ok", object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+
+
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        val uri: Uri = Uri.fromParts("package", packageName, null)
+                        intent.data = uri
+                        startActivity(intent)
+                    }
+
+                })
+            }.show()
+        }
+
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
